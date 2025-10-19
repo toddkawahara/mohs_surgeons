@@ -7,7 +7,7 @@ df <- read.csv('Final_Mohs_Billing.csv')
 df1 <- df %>%
   filter(Billing_Year == Graduation.Year + 1)
 
-# Billing for each code averaged
+# Billings for each code per surgeon
 df_total_billed <- df1 %>%
   group_by(Billing_Year, HCPCS_Cd) %>%
   summarize(total_billed = sum(Tot_Srvcs))
@@ -20,7 +20,7 @@ df_yearly_surgeons <- df1 %>%
 df_yearly_avg_bill <- merge(df_total_billed, df_yearly_surgeons, by = c('Billing_Year', 'HCPCS_Cd')) %>%
   mutate(yearly_avg = total_billed/total_surgeons)
 
-# Billing for all codes averaged
+# Billings for all codes per surgeon
 df_total_billed1 <- df1 %>%
   group_by(Billing_Year) %>%
   summarize(total_billed = sum(Tot_Srvcs))
@@ -33,7 +33,7 @@ df_yearly_surgeons1 <- df1 %>%
 df_yearly_avg_bill_all <- merge(df_total_billed1, df_yearly_surgeons1, by = c('Billing_Year')) %>%
   mutate(yearly_avg = total_billed/total_surgeons)
 
-# Charged for each code averaged
+# Charges for each code per surgeon
 df_total_charged <- df1 %>%
   group_by(Billing_Year, HCPCS_Cd) %>%
   summarize(total_charged = sum(Avg_Sbmtd_Chrg))
@@ -41,7 +41,7 @@ df_total_charged <- df1 %>%
 df_yearly_avg_charge <- merge(df_total_charged, df_yearly_surgeons, by = c('Billing_Year', 'HCPCS_Cd')) %>%
   mutate(yearly_avg = total_charged/total_surgeons)
 
-# Charged for all codes averaged
+# Charges for all codes per surgeon
 df_total_charged1 <- df1 %>%
   group_by(Billing_Year) %>%
   summarize(total_charged = sum(Avg_Sbmtd_Chrg))
@@ -49,7 +49,7 @@ df_total_charged1 <- df1 %>%
 df_yearly_avg_charge_all <- merge(df_total_charged1, df_yearly_surgeons1, by = c('Billing_Year')) %>%
   mutate(yearly_avg = total_charged/total_surgeons)
 
-# Grouping by demographics
+# Service area data
 df_demographic <- df1 %>%
   distinct(NPI, Billing_Year, Rndrng_Prvdr_RUCA_Desc) %>%
   group_by(Billing_Year, Rndrng_Prvdr_RUCA_Desc) %>%
@@ -59,7 +59,7 @@ df_demographic <- df1 %>%
          surgeons_pct = surgeons/total_surgeons_year) %>%
   ungroup()
 
-# Grouping by state
+# State demographic data
 df_state <- df1 %>%
   distinct(NPI, Billing_Year, Rndrng_Prvdr_State_Abrvtn) %>%
   group_by(Billing_Year, Rndrng_Prvdr_State_Abrvtn) %>%
@@ -69,7 +69,7 @@ df_state <- df1 %>%
          surgeons_pct = surgeons/total_surgeons_year) %>%
   ungroup()
 
-# Grouping by office/facility
+# Office demographic data
 df_office <- df1 %>%
   distinct(NPI, Billing_Year, Place_Of_Srvc) %>%
   group_by(Billing_Year, Place_Of_Srvc) %>%
