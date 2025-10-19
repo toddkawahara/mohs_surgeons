@@ -1,5 +1,4 @@
 library(dplyr)
-library(stringr)
 
 # read in data
 df <- read.csv('Final_Mohs_Billing.csv')
