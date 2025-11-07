@@ -83,7 +83,7 @@ ggplot(df_billing_services,
   ) +
   theme_classic() +
   labs(
-    title = "Average Code Services per Year",
+    # title = "Average Code Services per Year",
     y = "Services",
     x = "Year",
     color = "Code"
@@ -115,7 +115,7 @@ ggplot(df_billing_services %>% distinct(Billing_Year, total_avg_services),
   ) +
   theme_classic() +
   labs(
-    title = "Average Total Services per Year",
+    # title = "Average Total Services per Year",
     y = "Services",
     x = "Year",
     color = "Code"

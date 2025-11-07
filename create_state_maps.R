@@ -59,9 +59,9 @@ plot_usmap(data = df_state_all, values = 'surgeons', regions = 'states') +
     ), 
     color = "black"
   ) + 
-  labs(
-    title = '2014-2023 State Surgeons'
-  ) + 
+  # labs(
+  #   title = '2014-2023 State Surgeons'
+  # ) + 
   theme(legend.position = 'right', 
         plot.title = element_text(
           hjust = 0.5, 
