@@ -1,50 +1,56 @@
 library(readxl)
 library(dplyr)
 
-# #Merged all years of Mohs Billing together into one file
-# df_2014 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2014")%>%
-#   mutate(Billing_Year = 2014)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2015 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2015")%>%
-#   mutate(Billing_Year = 2015)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2016 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2016")%>%
-#   mutate(Billing_Year = 2016)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2017 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2017")%>%
-#   mutate(Billing_Year = 2017)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2018 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2018")%>%
-#   mutate(Billing_Year = 2018)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2019 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2019")%>%
-#   mutate(Billing_Year = 2019)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2020 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2020")%>%
-#   mutate(Billing_Year = 2020)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2021 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2021")%>%
-#   mutate(Billing_Year = 2021)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2022 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2022")%>%
-#   mutate(Billing_Year = 2022)%>%
-#   relocate(Billing_Year, .before = 1)
-# df_2023 <- read_excel("Medicare.Mohs.Services.xlsx", sheet = "Medicare_Physician_2023")%>%
-#   mutate(Billing_Year = 2023)%>%
-#   relocate(Billing_Year, .before = 1)
-# 
-# final_df <- rbind(df_2014,df_2015,df_2016,df_2017,df_2018,df_2019,df_2020,df_2021,df_2022,df_2023)
-# 
-# write.csv(final_df, "Medicare.Mohs.Services.Final.csv")
+# Merge all years of Mohs Billing together into one file
+df_2014 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2014.csv') %>%
+  mutate(Billing_Year = 2014) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2015 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2015.csv') %>%
+  mutate(Billing_Year = 2015) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2016 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2016.csv') %>%
+  mutate(Billing_Year = 2016) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2017 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2017.csv') %>%
+  mutate(Billing_Year = 2017) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2018 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2018.csv') %>%
+  mutate(Billing_Year = 2018) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2019 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2019.csv') %>%
+  mutate(Billing_Year = 2019) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2020 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2020.csv') %>%
+  mutate(Billing_Year = 2020) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2021 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2021.csv') %>%
+  mutate(Billing_Year = 2021) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2022 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2022.csv') %>%
+  mutate(Billing_Year = 2022) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+df_2023 <- read.csv('Medicare_Physician_Other_Practitioners_by_Provider_and_Service_2023.csv') %>%
+  mutate(Billing_Year = 2023) %>% 
+  rename(NPI = Rndrng_NPI) %>%
+  relocate(Billing_Year, .before = 1)
+
+codes_df <- rbind(df_2014,df_2015,df_2016,df_2017,df_2018,df_2019,df_2020,df_2021,df_2022,df_2023)
 
 # Read in Data
 surgeon_df <- read_excel("mohs.surgeon.xlsx", sheet = "Final")
-codes_df <- read.csv("Medicare.Mohs.Services.Final.csv")
 
 # Filter to desired codes
 codes_df <- codes_df %>%
-  filter(HCPCS_Cd %in% c(17311, 17312, 17313, 17314)) %>%
-  select(-X)
+  filter(HCPCS_Cd %in% c(17311, 17312, 17313, 17314))
 
 # Filter to grads before 2023
 surgeon_df <- surgeon_df %>%
