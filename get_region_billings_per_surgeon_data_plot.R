@@ -101,7 +101,7 @@ ggplot(data_region_plot,
   geom_point(size = 2) + 
   scale_color_brewer(palette = 'Set1') +
   labs(
-    title = 'Yearly Practice Location Billings Per Surgeon', 
+    title = 'Yearly Practice Location Billings Per Surgeon',
     x = 'Year', 
     y = 'Billings per Surgeon', 
     color = 'Group'
