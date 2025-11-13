@@ -161,7 +161,7 @@ ggplot(df_billing_services_17311_17313,
   theme_classic() +
   labs(
     # title = "17311 and 17313 Code Avg Services per Year",
-    y = "Services",
+    y = "Cases",
     x = "Year",
     color = "Code"
   ) +
