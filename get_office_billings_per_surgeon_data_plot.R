@@ -20,7 +20,9 @@ df_billing <- read.csv('Final_Mohs_Billing.csv', row.names = 1) %>%
       Rndrng_Prvdr_RUCA_Desc == "Secondary flow 30% to <50% to a urbanized area of 50,000 and greater" ~ 'Micropolitan', 
       Rndrng_Prvdr_RUCA_Desc == "Unknown" ~ 'Unknown'
     )
-  )
+  ) %>% 
+  mutate(Tot_Srvcs = as.numeric(Tot_Srvcs)) %>% 
+  mutate(Tot_Srvcs = replace_na(Tot_Srvcs, 0))
 
 # getting yearly surgeons in each office
 df_office_codes_surgeons <- df_billing %>%
