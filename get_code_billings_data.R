@@ -4,10 +4,6 @@ library(writexl)
 
 # read in data
 df_grads <- read.csv('Final_Mohs_Billing.csv') 
-
-df1 <- df_grads %>%
-  filter(NPI == 1427221704)
-
 df_all <- read.csv('mohs_billing_all.csv')
 
 # ---- avg codes per year ----
