@@ -74,7 +74,7 @@ summary(model_17311_17313)
 
 
 # individual trend plot labels
-p_values = c(0.328, 0.046, 0.006, 0.841)
+p_values = c(0.99, 0.012, 0.006, 0.841)
 
 label_positions <- df_billing_services %>%
   filter(Billing_Year == 2023) %>%
@@ -85,7 +85,7 @@ label_positions <- df_billing_services %>%
 label_positions_total <- df_billing_services %>%
   slice(n()) %>%
   select(Billing_Year, total_avg_services) %>%
-  mutate(p_values = 0.900, 
+  mutate(p_values = 0.413, 
          HCPCS_Cd = 'Total_Services') %>%
   rename(code_avg_services = total_avg_services)
 
@@ -140,7 +140,7 @@ ggplot(df_billing_services,
 label_positions_17311_17313 <- df_billing_services_17311_17313 %>%
   slice(n()) %>%
   select(Billing_Year, code_avg_services) %>%
-  mutate(p_value = 0.0762)
+  mutate(p_value = 0.421)
 
 # 17311 17313 trend plot
 ggplot(df_billing_services_17311_17313, 

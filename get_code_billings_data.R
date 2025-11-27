@@ -3,13 +3,12 @@ library(tidyverse)
 library(writexl)
 
 # read in data
-df_grads <- read.csv('Final_Mohs_Billing.csv') %>% 
-  mutate(Tot_Srvcs = as.numeric(Tot_Srvcs)) %>% 
-  mutate(Tot_Srvcs = replace_na(Tot_Srvcs, 0))
+df_grads <- read.csv('Final_Mohs_Billing.csv') 
 
-df_all <- read.csv('mohs_billing_all.csv') %>% 
-  mutate(Tot_Srvcs = as.numeric(Tot_Srvcs)) %>% 
-  mutate(Tot_Srvcs = replace_na(Tot_Srvcs, 0))
+df1 <- df_grads %>%
+  filter(NPI == 1427221704)
+
+df_all <- read.csv('mohs_billing_all.csv')
 
 # ---- avg codes per year ----
 # yearly avg codes per surgeon
@@ -23,7 +22,7 @@ df_yearly_surgeons <- df_grads %>%
   summarize(total_surgeons = n())
 
 df_yearly_avg_bill <- merge(df_total_billed, df_yearly_surgeons, by = c('Billing_Year')) %>%
-  mutate(yearly_avg = total_new_grad_billed/total_surgeons)
+  mutate(yearly_avg = round(total_new_grad_billed/total_surgeons, 2))
 
 df_codes_per_surgeon_yearly_table <- df_yearly_avg_bill %>%
   select(Billing_Year, yearly_avg, HCPCS_Cd) %>%
@@ -39,7 +38,7 @@ df_total_billed1 <- df_grads %>%
   summarize(total_billed = sum(Tot_Srvcs))
 
 df_yearly_avg_bill_all <- merge(df_total_billed1, df_yearly_surgeons, by = c('Billing_Year')) %>%
-  mutate(yearly_avg = total_billed/total_surgeons, 
+  mutate(yearly_avg =  round(total_billed/total_surgeons, 2), 
          HCPCS_Cd = 'Total_Cases')
 
 df_codes_per_surgeon_bill_all_yearly_table <- df_yearly_avg_bill_all %>%
@@ -55,7 +54,7 @@ df_total_billed2 <- df_grads %>%
   summarize(total_billed = sum(Tot_Srvcs))
 
 df_yearly_avg_services_all <- merge(df_total_billed2, df_yearly_surgeons, by = c('Billing_Year')) %>%
-  mutate(yearly_avg = total_billed/total_surgeons, 
+  mutate(yearly_avg = round(total_billed/total_surgeons, 2), 
          HCPCS_Cd = 'Total_Services')
 
 df_codes_per_surgeon_services_all_yearly_table <- df_yearly_avg_services_all %>%
@@ -69,9 +68,6 @@ df_codes_per_surgeon_yearly_table <- rbind(df_codes_per_surgeon_yearly_table,
                                            df_codes_per_surgeon_bill_all_yearly_table, 
                                            df_codes_per_surgeon_services_all_yearly_table)
 
-########################################
-########################################
-########################################
 ########################################
 # percent of cases done by new grads
 df_total_billed_filtered_cases <- df_grads %>%

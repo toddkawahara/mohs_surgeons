@@ -47,7 +47,8 @@ codes_df <- rbind(df_2014,df_2015,df_2016,df_2017,df_2018,df_2019,df_2020,df_202
 
 # Filter to desired codes
 codes_df <- codes_df %>%
-  filter(HCPCS_Cd %in% c(17311, 17312, 17313, 17314))
+  filter(HCPCS_Cd %in% c(17311, 17312, 17313, 17314)) %>%
+  mutate(Tot_Srvcs = as.numeric(gsub(',', '', Tot_Srvcs)))
 
 # ---- Read in and clean surgeon grad data ----
 # Read in Data
