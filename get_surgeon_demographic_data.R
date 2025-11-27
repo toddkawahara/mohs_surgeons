@@ -4,12 +4,8 @@ library(writexl)
 # read in data
 df <- read.csv('Final_Mohs_Billing.csv')
 
-# Filter for year right after graduation
-df1 <- df %>%
-  filter(Billing_Year == Graduation.Year + 1)
-
 # Service area data
-df_demographic <- df1 %>%
+df_demographic <- df %>%
   distinct(NPI, Billing_Year, Rndrng_Prvdr_RUCA_Desc) %>%
   group_by(Billing_Year, Rndrng_Prvdr_RUCA_Desc) %>%
   summarize(surgeons = n()) %>%
@@ -19,7 +15,7 @@ df_demographic <- df1 %>%
   ungroup()
 
 # state demographic data
-df_state <- df1 %>%
+df_state <- df %>%
   distinct(NPI, Billing_Year, Rndrng_Prvdr_State_Abrvtn) %>%
   group_by(Billing_Year, Rndrng_Prvdr_State_Abrvtn) %>%
   summarize(surgeons = n()) %>%
@@ -29,7 +25,7 @@ df_state <- df1 %>%
   ungroup()
 
 # office demographic data
-df_office <- df1 %>%
+df_office <- df %>%
   distinct(NPI, Billing_Year, Place_Of_Srvc) %>%
   group_by(Billing_Year, Place_Of_Srvc) %>%
   summarize(surgeons = n()) %>%

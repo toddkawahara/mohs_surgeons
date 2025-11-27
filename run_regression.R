@@ -17,7 +17,9 @@ df_billing <- read.csv('Final_Mohs_Billing.csv', row.names = 1) %>%
       Rndrng_Prvdr_RUCA_Desc == "Secondary flow 30% to <50% to a urbanized area of 50,000 and greater" ~ 'Micropolitan', 
       Rndrng_Prvdr_RUCA_Desc == "Unknown" ~ 'Unknown'
     )
-  )
+  ) %>% 
+  mutate(Tot_Srvcs = as.numeric(Tot_Srvcs)) %>% 
+  mutate(Tot_Srvcs = replace_na(Tot_Srvcs, 0))
 
 # getting avg billings per surgeon
 df_billing_services <- df_billing %>%
@@ -72,7 +74,7 @@ summary(model_17311_17313)
 
 
 # individual trend plot labels
-p_values = c(0.951, 0.011, 0.007, 0.835)
+p_values = c(0.328, 0.046, 0.006, 0.841)
 
 label_positions <- df_billing_services %>%
   filter(Billing_Year == 2023) %>%
@@ -83,8 +85,8 @@ label_positions <- df_billing_services %>%
 label_positions_total <- df_billing_services %>%
   slice(n()) %>%
   select(Billing_Year, total_avg_services) %>%
-  mutate(p_values = 0.391, 
-         HCPCS_Cd = 'Total') %>%
+  mutate(p_values = 0.900, 
+         HCPCS_Cd = 'Total_Services') %>%
   rename(code_avg_services = total_avg_services)
 
 # combine labels
@@ -138,7 +140,7 @@ ggplot(df_billing_services,
 label_positions_17311_17313 <- df_billing_services_17311_17313 %>%
   slice(n()) %>%
   select(Billing_Year, code_avg_services) %>%
-  mutate(p_value = 0.455)
+  mutate(p_value = 0.0762)
 
 # 17311 17313 trend plot
 ggplot(df_billing_services_17311_17313, 
